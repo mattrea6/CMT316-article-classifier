@@ -1,15 +1,6 @@
 Matthew Rea
 c1737407
 
-Dependencies;
-  os
-  operator
-  random
-  scikit-learn==1.0.2
-  nltk==3.7
-  numpy==1.22.2
-  matplotlib==3.5.1
-
 The steps for this classification are separated into
   GetData.py
   Preprocess.py
@@ -26,3 +17,8 @@ This will create 13 .png files and 13.txt files in this directory.
 To run the classification using the pre-selected best parameters, use command;
 > python Main.py
 Results are printed to the terminal.
+
+GetData.py contains functions that get raw data from all text files under bbc\
+Preprocess.py contains functions that tokenise, lemmatise, vectorise and convert articles to n-gram form.
+FeatureSelection.py contains functions that count word frequency and create word frequency vectors
+Visualise.py contains a function that takes classification results and visualises them.

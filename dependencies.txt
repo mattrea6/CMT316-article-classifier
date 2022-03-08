@@ -1,0 +1,7 @@
+os
+operator
+random
+scikit-learn==1.0.2
+nltk==3.7
+numpy==1.22.2
+matplotlib==3.5.1
