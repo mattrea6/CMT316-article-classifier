@@ -37,3 +37,5 @@ results = classifier.predict(testData)
 print("Test complete.\n")
 print(sklearn.metrics.classification_report(testLabels, results))
 Visualise.make_stacked_bar(testLabels, results)
+
+# done. final commit 09/03/2022 - 15:05
