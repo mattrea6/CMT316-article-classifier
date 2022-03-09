@@ -53,17 +53,13 @@ def train_dev_classifier(rawTrainData, rawDevData, ngrams, noFeatures):
 rawData = GetData.get_all_files()
 train, test, dev = Preprocess.split_data(rawData, dataSplits)
 
-testResults = []
-
+bestF1 = 0
 for ngrams in [1,2,3]:
     for noFeatures in [500, 1000, 2000, 4000]:
-        testResults.append(train_dev_classifier(train, dev, ngrams, noFeatures))
-
-bestF1 = 0
-for result in testResults:
-    if result['weighted avg']['f1-score'] > bestF1:
-        bestResult = result
-        bestF1 = result['macro avg']['f1-score']
+        result = train_dev_classifier(train, dev, ngrams, noFeatures)
+        if result['weighted avg']['f1-score'] > bestF1:
+            bestResult = result
+            bestF1 = result['macro avg']['f1-score']
 
 print("Best classifier used {} features, {}-grams".format(bestResult['noFeatures'], bestResult['ngrams']))
 print("Best classifier got a macro-average F1 score of {} on development set.".format(bestF1))

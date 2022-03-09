@@ -7,16 +7,17 @@ import sklearn
 
 # constants
 dataSplits = [80,20]
-articleTypes = ["business", "entertainment", "politics", "sport", "tech"]
+ngramDegree = 1
+noFeatures = 4000
 
 # get data from file
 rawData = GetData.get_all_files()
 # split data into train and test
 rawTrain, rawTest = Preprocess.split_data(rawData, dataSplits)
 # tokenise and lemmatize train data
-processedTrainData = Preprocess.tokenise_lemmatise(rawTrain, 1)
+processedTrainData = Preprocess.tokenise_lemmatise(rawTrain, ngramDegree)
 # get unique unigram list and word frequency vector
-wordList, wordFrequencyVector = FeatureSelection.get_word_list_vector(processedTrainData, 4000)
+wordList, wordFrequencyVector = FeatureSelection.get_word_list_vector(processedTrainData, noFeatures)
 # vectorise train data
 print("\nVectorising training data...")
 trainData, trainLabels = Preprocess.vectorise_dataset(processedTrainData, wordList)
@@ -26,7 +27,7 @@ classifier = sklearn.svm.SVC(kernel = "linear", gamma = 'auto')
 classifier.fit(trainData, trainLabels)
 print("Classifier trained.")
 # tokenise and lemmatize test data
-processedTestData = Preprocess.tokenise_lemmatise(rawTest, 1)
+processedTestData = Preprocess.tokenise_lemmatise(rawTest, ngramDegree)
 # vectorise test set
 print("\nVectorising training data...")
 testData, testLabels = Preprocess.vectorise_dataset(processedTestData, wordList)
