@@ -1,20 +1,23 @@
+# Matthew Rea
+# c1737407
+# this file contains functions that perform feature selection.
+
 from operator import itemgetter
 import numpy as np
-import nltk
 
-# takes list of articles tokenised and lemmatized and creates a unigram word frequency vector
+# takes list of articles tokenised and lemmatized and creates a word frequency vector
 def count_word_frequency(data):
     wordFrequency = {}
-    # get frequency of every word in article set apart from stopwords
     for article in data:
         for word in article:
+            # adds word if not already counted, increments if it is
             if word in wordFrequency:
                 wordFrequency[word] += 1
             else:
                 wordFrequency[word] = 1
     return wordFrequency
 
-# takes multiple ngram frequency dictionaries and combines them
+# takes multiple frequency dictionaries and combines them
 def combine_word_frequency(wordFrequencies):
     totalFrequency = {}
     for freqDict in wordFrequencies:
@@ -25,12 +28,14 @@ def combine_word_frequency(wordFrequencies):
                 totalFrequency[key] += freqDict[key]
     return totalFrequency
 
-# takes an ngram frequency dictionary and turns it into a list of words and vector
+# takes a frequency dictionary and turns it into a list of words and vector
 def make_vector(wordFrequencyDict):
-    frequencyVector = np.zeros(len(wordFrequencyDict))
+    # make list of dictionary keys and empty vector
     wordList = list(wordFrequencyDict.keys())
-    for i in range(len(wordList)):
-        frequencyVector[i] = wordFrequencyDict[wordList[i]]
+    frequencyVector = np.zeros(len(wordFrequencyDict))
+    for i, word in enumerate(wordList):
+        # set each vector index to word count
+        frequencyVector[i] = wordFrequencyDict[word]
     return wordList, frequencyVector
 
 # gets n most or least frequent words in dictionary

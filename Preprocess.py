@@ -24,6 +24,7 @@ def lemmatize_tokens(data):
     lemmatizer = nltk.stem.WordNetLemmatizer()
     lemma_data = []
     for token in data:
+        # lemmatise and also send to lowercase
         lemma_data.append(lemmatizer.lemmatize(token).lower())
     return lemma_data
 
@@ -31,7 +32,7 @@ def lemmatize_tokens(data):
 extraStopwords = [".",",","-","--","``","'","'s",'"',"''", ")", "(", ":"]
 # takes the stopwords out of the data
 def remove_stopwords(data):
-    stopwords=set(nltk.corpus.stopwords.words('english'))
+    stopwords = set(nltk.corpus.stopwords.words('english'))
     for char in extraStopwords:
         stopwords.add(char)
     # returns article with no stopwords
@@ -45,6 +46,7 @@ def make_bigram(data):
         for article in data[articleType]:
             bigrams = []
             for i in range(len(article)-1):
+                # just take the word and add the word after it too
                 bigrams.append("{} {}".format(article[i], article[i+1]))
             newData[articleType].append(bigrams)
     return newData
@@ -57,13 +59,14 @@ def make_trigram(data):
         for article in data[articleType]:
             trigrams = []
             for i in range(len(article)-2):
+                # just take the word and add the two words after it too
                 trigrams.append("{} {} {}".format(article[i], article[i+1], article[i+2]))
             newData[articleType].append(trigrams)
     return newData
 
 # function to split data into different sized sets
 # should work for any proportions, any number of splits
-# this method is destructive to the original data (intentionally)
+# this method is destructive to the original data
 def split_data(data, in_ratio):
     # ratio of split sizes must equal 100
     if sum(in_ratio) != 100:
@@ -94,7 +97,7 @@ def split_data(data, in_ratio):
     return splitData
 
 # takes the data from GetData in dictionary form
-# completes preprocessing steps and returns as {}
+# completes preprocessing steps and returns as dict
 def tokenise_lemmatise(data, gram = 1):
     print("\nTokenising data...")
     processedData = {}

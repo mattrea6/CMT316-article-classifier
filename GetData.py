@@ -17,6 +17,7 @@ def get_raw_file(filepath):
 def get_all_files_directory(directory):
     if os.path.exists(directory):
         allFiles = []
+        # list all files in directory and grab them one at a time
         fileNames = os.listdir(directory)
         for fileName in fileNames:
             allFiles.append(get_raw_file(directory+"\\"+fileName))
